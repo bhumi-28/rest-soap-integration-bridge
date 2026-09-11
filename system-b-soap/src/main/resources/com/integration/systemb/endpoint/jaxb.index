@@ -1,0 +1,9 @@
+CustomerRecordBType
+GetAllCustomersRequest
+GetAllCustomersResponse
+GetCustomerByNumberRequest
+GetCustomerByNumberResponse
+CreateCustomerRequest
+CreateCustomerResponse
+UpdateCustomerRequest
+UpdateCustomerResponse

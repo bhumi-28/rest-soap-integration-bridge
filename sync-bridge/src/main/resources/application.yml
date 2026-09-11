@@ -1,0 +1,40 @@
+server:
+  port: 8093
+
+spring:
+  application:
+    name: sync-bridge
+  datasource:
+    url: jdbc:h2:mem:syncbridge
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+system-a:
+  base-url: http://localhost:8091
+
+system-b:
+  base-url: http://localhost:8092
+
+cors:
+  allowed-origins: http://localhost:3000
+
+sync:
+  scheduling:
+    enabled: true
+    interval-ms: 600000
+
+logging:
+  level:
+    com.integration.bridge: DEBUG

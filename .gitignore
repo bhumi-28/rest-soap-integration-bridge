@@ -1,0 +1,25 @@
+# Maven / Java build output
+target/
+*.class
+
+# Maven wrapper downloads
+.mvn/wrapper/maven-wrapper.jar
+
+# Node / frontend build output
+node_modules/
+dist/
+
+# Logs
+*.log
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+.settings/
+.classpath
+.project
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:cust="http://integration.com/systemb/customer"
+           targetNamespace="http://integration.com/systemb/customer"
+           elementFormDefault="qualified">
+
+    <xs:element name="CustomerRecordB">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="customerNumber" type="xs:long"/>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="contactEmail" type="xs:string"/>
+                <xs:element name="phone" type="xs:string"/>
+                <xs:element name="lastModified" type="xs:dateTime"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAllCustomersRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="lastModifiedSince" type="xs:dateTime" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAllCustomersResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="customers" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="customer" type="cust:CustomerRecordB" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCustomerByNumberRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="customerNumber" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetCustomerByNumberResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="customer" type="cust:CustomerRecordB" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CreateCustomerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="contactEmail" type="xs:string"/>
+                <xs:element name="phone" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="CreateCustomerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="customer" type="cust:CustomerRecordB"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="UpdateCustomerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="customerNumber" type="xs:long"/>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="contactEmail" type="xs:string"/>
+                <xs:element name="phone" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="UpdateCustomerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="customer" type="cust:CustomerRecordB"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

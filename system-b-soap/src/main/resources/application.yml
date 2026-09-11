@@ -1,0 +1,25 @@
+server:
+  port: 8092
+
+spring:
+  application:
+    name: system-b-soap
+  datasource:
+    url: jdbc:h2:mem:systemb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+  webservices:
+    path: /ws
+
+logging:
+  level:
+    org.springframework.ws: DEBUG
