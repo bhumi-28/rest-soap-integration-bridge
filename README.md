@@ -142,7 +142,7 @@ curl http://localhost:8093/api/sync/mappings
 
 ## How the sync works
 
-A sync job runs automatically every **10 minutes** (`@Scheduled(fixedRate = 600000)` in `SyncService`) and can also be triggered manually.
+A sync job runs automatically on a configurable schedule — default every **10 minutes** via the `ScheduledSync` component (`sync.schedule.interval-ms`) — and can also be triggered manually. Scheduling can be tuned or fully disabled with `sync.scheduling.enabled` in `sync-bridge/src/main/resources/application.yml`.
 
 1. Creates a `SyncJob` row with status `RUNNING`.
 2. Pulls all customers from System A (`GET /api/customers`) and System B (`GetAllCustomers` SOAP operation).
@@ -212,6 +212,9 @@ Tests run with JUnit 5, Mockito, and WireMock — they do **not** require the ot
 |---|---|---|
 | `ChangeDetectorTest` | 7 | pure field change-detection logic (no change, A-only, B-only, conflict, null handling) |
 | `SyncServiceIntegrationTest` | 5 | clean sync, conflict detection without silent overwrite, simulated System B outage, one-sided propagation, conflict resolution with write-back to both systems |
+| `SyncApiIntegrationTest` | 2 | full HTTP round-trip against a real bridge instance: trigger, list/unserialize conflicts and mappings (guards the lazy-proxy JSON bug), resolve via `POST /conflicts/{id}/resolve` and assert the write-back |
+
+Each service's tests are also run as part of `mvnw clean package` — `system-a-rest` (6 controller tests using MockMvc) and `system-b-soap` (3 endpoint tests using `spring-ws-test`). Full suite: **22 tests**.
 
 A simulated outage test proves the bridge never crashes when a downstream system is unreachable.
 
@@ -221,3 +224,7 @@ A simulated outage test proves the bridge never crashes when a downstream system
 - **SOAP client:** uses Spring-WS `WebServiceTemplate` with a `Jaxb2Marshaller` (explicit JAXB types in `com.integration.bridge.soap`) — no raw XML string building, no regex parsing.
 - **New-record propagation:** as noted above, records unique to either side are pushed to the other side so the two systems converge.
 - **Databases:** all three services use H2 in-memory databases seeded with overlapping sample customers so conflicts are easy to demo. Swap to MySQL/Postgres by changing each module's datasource in its `application.yml`.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
